@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Bitácora personal para registrar y consultar las horas de servicio social."
+  >
+  <meta name="theme-color" content="#f8fafc">
+
+  <title>Bitácora | Control de servicio</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script type="module" src="js/app.js"></script>
+</head>
+
+<body class="auth-required">
+
+<section id="login-screen" class="login-screen">
+  <div class="login-card">
+    <p class="eyebrow">BITÁCORA</p>
+    <h1>Iniciar sesión</h1>
+    <p>Accede para consultar y registrar tus horas de servicio.</p>
+
+    <form id="login-form">
+      <label for="login-email">Correo electrónico</label>
+      <input
+        id="login-email"
+        type="email"
+        autocomplete="username"
+        required
+      />
+
+      <label for="login-password">Contraseña</label>
+      <input
+        id="login-password"
+        type="password"
+        autocomplete="current-password"
+        required
+      />
+
+      <button id="login-button" type="submit">
+        Entrar
+      </button>
+
+      <p id="login-error" role="alert"></p>
+    </form>
+  </div>
+</section>
+
+  <div class="app-shell">
+
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Bitácora, inicio">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="4" y="4" width="16" height="16" rx="5"
+              stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 7.5V12L15 14"
+              stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+
+        <span class="brand-copy">
+          <strong>bitácora</strong>
+          <small>CONTROL DE SERVICIO</small>
+        </span>
+      </a>
+
+      <div class="connection-status">
+        <span class="status-dot"></span>
+        <span>te ama tu osito linette</span>
+      </div>
+    </header>
+
+    <main id="inicio">
+
+      <section class="welcome-section">
+        <div>
+          <p class="eyebrow" id="current-date">Cargando fecha...</p>
+          <h1>Tu tiempo,<br> <span>bajo control amorcito.</span></h1>
+          <p class="welcome-description">
+            Registra tu jornada y mantén tus horas de servicio organizadas.
+          </p>
+        </div>
+
+        <div class="welcome-decoration" aria-hidden="true">
+          <svg viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="49" stroke="currentColor"
+              stroke-opacity=".13" stroke-width="2"/>
+            <circle cx="60" cy="60" r="36" stroke="currentColor"
+              stroke-opacity=".2" stroke-width="2"/>
+            <path d="M60 35V60L77 70" stroke="currentColor"
+              stroke-width="4" stroke-linecap="round"
+              stroke-linejoin="round"/>
+            <circle cx="60" cy="60" r="4" fill="currentColor"/>
+          </svg>
+        </div>
+      </section>
+
+      <section class="clock-card" aria-labelledby="clock-title">
+        <div class="clock-card-header">
+          <div>
+            <p class="eyebrow">TU JORNADA</p>
+            <h2 id="clock-title">Registro de asistencia</h2>
+          </div>
+
+          
+        </div>
+
+        <div class="clock-display">
+          <span id="live-clock">--:--</span>
+          <span id="clock-period">--</span>
+        </div>
+
+        <div class="attendance-state" id="attendance-state" aria-live="polite">
+          <span class="state-indicator"></span>
+          <span id="attendance-message">
+            Aún no has registrado tu entrada.
+          </span>
+        </div>
+
+        <div class="attendance-details" id="attendance-details" hidden>
+          <div class="detail-item">
+            <span>Hora de entrada</span>
+            <strong id="entry-time">--:--</strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Hora de salida</span>
+            <strong id="exit-time">Pendiente</strong>
+          </div>
+        </div>
+
+        
+<div class="attendance-buttons">
+  <button class="primary-button" id="entry-button" type="button">
+    <span aria-hidden="true">↗</span>
+    <span>Registrar entrada</span>
+  </button>
+
+  <button class="primary-button exit-button" id="exit-button" type="button">
+    <span aria-hidden="true">↙</span>
+    <span>Registrar salida</span>
+  </button>
+</div>
+
+<p class="helper-text" id="attendance-helper">
+  Registra tu entrada y salida con botones independientes.
+</p>
+
+
+        <p class="helper-text" id="attendance-helper">
+          Un toque para iniciar tu jornada.
+        </p>
+      </section>
+
+      <section class="summary-section" aria-labelledby="summary-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">TU PROGRESO</p>
+            <h2 id="summary-title">Resumen de horas</h2>
+          </div>
+        </div>
+
+        <div class="summary-grid">
+          <article class="stat-card">
+            <div class="stat-icon stat-icon-purple">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="3"
+                  stroke="currentColor" stroke-width="1.7"/>
+                <path d="M16 3V7M8 3V7M3 10H21"
+                  stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <span class="stat-label">Esta semana</span>
+            <strong class="stat-value" id="weekly-hours">0 h</strong>
+            <span class="stat-caption">Horas registradas</span>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-icon stat-icon-green">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"
+                  stroke="currentColor" stroke-width="1.7"/>
+                <path d="M12 7V12L15.5 14"
+                  stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <span class="stat-label">Acumulado</span>
+            <strong class="stat-value" id="total-hours">0 h</strong>
+            <span class="stat-caption">Historial disponible</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="history-section" id="historial"
+        aria-labelledby="history-title">
+
+        <div class="section-heading history-heading">
+          <div>
+            <p class="eyebrow">TU ACTIVIDAD</p>
+            <h2 id="history-title">Historial reciente</h2>
+          </div>
+
+          <span class="record-count" id="record-count">0 registros</span>
+        </div>
+
+        <div class="history-card">
+          <div class="history-list" id="history-list">
+            <div class="empty-state">
+              <span class="empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect x="4" y="3" width="16" height="18" rx="3"
+                    stroke="currentColor" stroke-width="1.7"/>
+                  <path d="M8 8H16M8 12H16M8 16H12"
+                    stroke="currentColor" stroke-width="1.7"
+                    stroke-linecap="round"/>
+                </svg>
+              </span>
+              <strong>Tu historial aparecerá aquí</strong>
+              <p>Cuando registres jornadas, podrás consultarlas en esta sección.</p>
+            </div>
+          </div>
+
+          
+          <button
+                class="history-toggle"
+                id="history-toggle"
+                type="button"
+                aria-expanded="false"
+                hidden > Ver más
+          </button>
+
+
+          <div class="history-footer">
+            <span>Las horas se calculan por jornada completa.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="export-section" aria-labelledby="export-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">TUS DOCUMENTOS</p>
+            <h2 id="export-title">Reportes y exportaciones</h2>
+          </div>
+        </div>
+
+          <article class="export-card">
+            <div class="export-icon excel-icon" aria-hidden="true">X</div>
+
+              <div class="export-copy">
+                <strong>Exportar a Excel</strong>
+                <p>Descarga tus registros y el total de horas.</p>
+              </div>
+
+          <button class="export-button" id="export-excel-button" type="button">
+            Descargar Excel
+          </button>
+        </article>
+        
+        <article class="export-card">
+          <div class="export-icon word-icon" aria-hidden="true">W</div>
+          <div class="export-copy">
+            <strong>Reporte bimestral</strong>
+            <p>Generación automática usando tu plantilla Word.</p>
+          </div>
+          <span class="coming-soon">Próximamente</span>
+        </article>
+      </section>
+
+    </main>
+
+    <footer class="app-footer">
+      <span class="footer-brand">bitácora<span>.</span></span>
+      <p>Tu tiempo cuenta corazon.</p>
+      <p class="footer-note">te amo mi cielo</p>
+    </footer>
+
+  </div>
+</body>
+</html>
